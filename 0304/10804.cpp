@@ -13,13 +13,15 @@ vector<int> arr; //배열을 전역변수로 선언
 
 //역배치 함수
 void reverseArray(int start, int end) {
-    while(start <= end) {
-        swap(arr[start-1], arr[end-1]);
-        start++; end--;
+    while (start <= end) {
+        swap(arr[start++ - 1], arr[end-- - 1]);
     }
 }
 
 int main() {
+    ios_base:: sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     int s, e;
     arr.assign(20, 0); //길이가 20인 배열 선언
     //배열 초기화
@@ -37,6 +39,6 @@ int main() {
     for (int i = 0; i < 20; i++) {
         cout << arr[i] << " ";
     }
-    cout << endl;
+    cout << "\n";
     return 0;
 }

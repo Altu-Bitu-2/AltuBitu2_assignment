@@ -9,6 +9,9 @@
 using namespace std;
 
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     int N;
     cin >> N;
 
@@ -27,7 +30,7 @@ int main() {
 
     int maxValue;
     int sum = 0;
-    int tmp = 100; //원소가 될 수 있는 최댓값보다 큼
+    int tmp = 100; //원소가 될 수 있는 최댓값
 
     //B 배열 순회
     for (int i = 0; i < N; i++) {
@@ -45,5 +48,3 @@ int main() {
 
     return 0;
 }
-
-//입력에 따른 결과는 잘 나오는데, 백준에서 "틀렸습니다"라고 합니다ㅠㅠ

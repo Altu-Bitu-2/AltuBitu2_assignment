@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "0304.exe"
   "0304.exe.manifest"
   "0304.pdb"
-  "CMakeFiles/0304.dir/11651.cpp.obj"
-  "CMakeFiles/0304.dir/11651.cpp.obj.d"
+  "CMakeFiles/0304.dir/1026.cpp.obj"
+  "CMakeFiles/0304.dir/1026.cpp.obj.d"
   "lib0304.dll.a"
 )
 

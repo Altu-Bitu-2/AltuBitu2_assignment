@@ -9,6 +9,8 @@
 using namespace std;
 
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
     int N; //손님 수
     cin >> N;
@@ -22,18 +24,16 @@ int main() {
     sort(guest.begin(), guest.end(), greater<>());
 
     long tip = 0; //팁의 범위는 1 이상 10만 미만인 자연수
-    int line = 1;
 
     for (int i = 0; i < N; i++) {
-        long money = guest[i] - (line++ - 1);
-        if(money > 0) {
-            tip += money;
+        long money = guest[i] - i;
+        if(money <= 0) {
+            break;
         }
+        tip += money;
     }
 
-    cout << tip;
-    cout << endl;
+    cout << tip << "\n";
 
     return 0;
 }
-

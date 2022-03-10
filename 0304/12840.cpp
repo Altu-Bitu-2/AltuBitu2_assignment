@@ -3,16 +3,20 @@
 //
 
 #include <iostream>
-#define DAY 86400
 
 using namespace std;
 
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     int h, m, s;
     int q; //쿼리 개수
     int time; //현재 시간을 초로 변환한 것
     int t; //쿼리 번호
     int second; //조작할 시간
+
+    const int DAY = 86400;
 
     cin >> h >> m >> s >> q;
     time = 3600 * h + 60 * m + s;
@@ -40,5 +44,3 @@ int main() {
 
     return 0;
 }
-
-//결과는 맞게 나오는데 백준에서는 시간 초과로 뜹니다ㅠㅠ
