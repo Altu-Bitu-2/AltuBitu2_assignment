@@ -19,7 +19,7 @@ int main() {
 
     vector<int> num_list; //평균, 중앙값, 범위 파악을 위해
     int num; //입력받는 숫자
-    float sum = 0; //숫자들의 합
+    double sum = 0; //숫자들의 합
 
     int N; //숫자 개수
     cin >> N;
@@ -34,7 +34,7 @@ int main() {
     //숫자들 오름차순 정렬
     sort(num_list.begin(), num_list.end());
     int range = num_list[N - 1] - num_list[0]; //범위
-    int median = num_list[(N - 1) / 2];; //중앙값
+    int median = num_list[N / 2];; //중앙값
 
     int max_iter = 1;
     for (int i = 0; i < MAX; i++) {
@@ -61,7 +61,7 @@ int main() {
         mode = mode_list[1];
     }
 
-    int avg = round(sum / (N * 1.0));
+    int avg = round(sum / (int) N);
 
     cout << avg << "\n";
     cout << median << "\n";
@@ -70,6 +70,3 @@ int main() {
 
     return 0;
 }
-
-//도저히 틀린 이유를 모르겠습니다ㅠㅠ
-//예제 입력에 따른 출력은 그대로 나와요.........

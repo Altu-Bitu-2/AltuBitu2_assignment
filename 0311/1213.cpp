@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 const int ALPHABET_CNT = 26; //알파벳 총 개수
@@ -40,31 +41,30 @@ int main() {
         return 0;
     }
 
-    string palindrome;
+    string palindrome1; //왼쪽 부분
+    string palindrome2; //가운데 부분
+    string palindrome3; //오른쪽 부분
 
-    //수정본
-    //palindrome의 앞부분
     for (int i = 0; i < 26; i++) {
         for (int j = 0; j < alphabet[i] / 2; j++) {
-            //alphabet이 포함된 개수의 절반만큼 반복
-            palindrome += i + 'A';
+            //왼쪽 부분
+            palindrome1 += i + 'A';
+            palindrome3 += i + 'A';
         }
-    }
-    //palindrome의 가운데
-    if (eng_name.length() % 2 == 1) {
-        //이름의 길이가 홀수일 때만 수행
-        for (int i = 0; i < 26; i++) {
+        if (eng_name.length() % 2 == 1) {
+            //이름의 길이가 홀수 일때만 수행
             if (alphabet[i] % 2 == 1) {
-                palindrome += i + 'A';
+                palindrome2 += i + 'A';
             }
         }
     }
-    //palindrome의 뒷부분
-    for (int i = 25; i >= 0; i--)
-        for (int j = 0; j < alphabet[i] / 2; j++)
-            palindrome += i + 'A';
+    reverse(palindrome3.begin(), palindrome3.end());
 
-    cout << palindrome << "\n";
+    if (eng_name.length() % 2 == 1) {
+        cout << palindrome1 << palindrome2 << palindrome3 << "\n";
+    } else {
+        cout << palindrome1 << palindrome3 << "\n";
+    }
 
     return 0;
 }
