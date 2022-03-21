@@ -9,7 +9,7 @@ using namespace std;
 
 const int MAX = 1e6; //test case의 최대 개수
 vector<bool> isPrime(MAX + 1, true);
-//100000+1개의 요소를 갖는 isPrime 배열(true로 초기화)
+//1000000+1개의 요소를 갖는 isPrime 배열(true로 초기화)
 
 void findPrime() {
     //에라토스테네스의 체
@@ -46,7 +46,7 @@ int main() {
     while (n != 0) {
         cin >> n; //입력받기
 
-        for (int i = 3; i < n / 2; i += 2) {
+        for (int i = 3; i <= n / 2; i += 2) {
             a = i;
             b = n - a;
 
@@ -65,30 +65,3 @@ int main() {
     }
     return 0;
 }
-
-
-/*
-bool isPrime(int num) {
-    for (int i = 2; i <= sqrt(num); i++) {
-        if (num % i == 0) {
-            //소수가 아니면
-            return false;
-        }
-    }
-    return true;
-}
- */
-/*
-for (int i = 1; i < n / 2; i++) {
-            //소수 찾기
-            a = 2 * i + 1;
-            b = n - a;
-
-            if (findPrime(a) && findPrime(b)) {
-                //a와 b가 모두 소수라면
-                cout << n << " = " << a << " + " << b << "\n";
-                isCorrect = true;
-                break;
-            }
-        }
-*/
