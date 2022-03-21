@@ -3,19 +3,9 @@
 //
 
 #include <iostream>
-#include <cmath>
+#include <vector>
 
 using namespace std;
-
-bool isPrime(int num) {
-    for (int i = 2; i <= sqrt(num); i++) {
-        if (num % i == 0) {
-            //소수가 아니면
-            return false;
-        }
-    }
-    return true;
-}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -28,18 +18,40 @@ int main() {
 
     while (n) {
         cin >> n; //입력받기
-        for (int i = 1; i < n / 2; i++) {
-            //소수 찾기
-            a = 2 * i + 1;
+
+        //에라토스테네스의 체
+        vector<bool> isPrime(n + 1, true);
+        //n+1개의 요소를 갖는 isPrime 배열(true로 초기화)
+        isPrime[0] = isPrime[1] = false; //0과 1은 소수가 아니므로
+
+        for (int i = 2; i <= n; i++) {
+            //i가 소수인지 판단
+            if (!isPrime[i]) {
+                //i가 소수가 아니라면
+                continue;
+            }
+            for (int j = 2 * i; j <= n; j += i) {
+                //i가 소수라면 j를 이용해 i의 배수 지우기
+                if (!isPrime[j]) {
+                    //이미 j가 지워졌다면
+                    continue;
+                }
+                isPrime[j] = false;
+            }
+        }
+
+        for (int i = 3; i < n / 2; i = i + 2) {
+            a = i;
             b = n - a;
 
-            if (isPrime(a) && isPrime(b)) {
+            if (isPrime[a] && isPrime[b]) {
                 //a와 b가 모두 소수라면
                 cout << n << " = " << a << " + " << b << "\n";
                 isCorrect = true;
                 break;
             }
         }
+
         if (!isCorrect) {
             //추측이 틀린 경우
             cout << "Goldbach's conjecture is wrong.\n";
@@ -47,3 +59,30 @@ int main() {
     }
     return 0;
 }
+
+
+/*
+bool isPrime(int num) {
+    for (int i = 2; i <= sqrt(num); i++) {
+        if (num % i == 0) {
+            //소수가 아니면
+            return false;
+        }
+    }
+    return true;
+}
+ */
+/*
+for (int i = 1; i < n / 2; i++) {
+            //소수 찾기
+            a = 2 * i + 1;
+            b = n - a;
+
+            if (findPrime(a) && findPrime(b)) {
+                //a와 b가 모두 소수라면
+                cout << n << " = " << a << " + " << b << "\n";
+                isCorrect = true;
+                break;
+            }
+        }
+*/
