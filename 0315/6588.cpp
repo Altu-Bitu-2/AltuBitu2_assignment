@@ -7,6 +7,31 @@
 
 using namespace std;
 
+const int MAX = 1e6; //test case의 최대 개수
+vector<bool> isPrime(MAX + 1, true);
+//100000+1개의 요소를 갖는 isPrime 배열(true로 초기화)
+
+void findPrime() {
+    //에라토스테네스의 체
+    isPrime[0] = isPrime[1] = false; //0과 1은 소수가 아니므로
+
+    for (int i = 2; i <= MAX; i++) {
+        //i가 소수인지 판단
+        if (!isPrime[i]) {
+            //i가 소수가 아니라면
+            continue;
+        }
+        for (int j = 2 * i; j <= MAX; j += i) {
+            //i가 소수라면 j를 이용해 i의 배수 지우기
+            if (!isPrime[j]) {
+                //이미 j가 지워졌다면
+                continue;
+            }
+            isPrime[j] = false;
+        }
+    }
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -16,31 +41,12 @@ int main() {
     int a, b; //n = a + b (a < b)
     bool isCorrect = false;
 
-    while (n) {
+    findPrime();
+
+    while (n != 0) {
         cin >> n; //입력받기
 
-        //에라토스테네스의 체
-        vector<bool> isPrime(n + 1, true);
-        //n+1개의 요소를 갖는 isPrime 배열(true로 초기화)
-        isPrime[0] = isPrime[1] = false; //0과 1은 소수가 아니므로
-
-        for (int i = 2; i <= n; i++) {
-            //i가 소수인지 판단
-            if (!isPrime[i]) {
-                //i가 소수가 아니라면
-                continue;
-            }
-            for (int j = 2 * i; j <= n; j += i) {
-                //i가 소수라면 j를 이용해 i의 배수 지우기
-                if (!isPrime[j]) {
-                    //이미 j가 지워졌다면
-                    continue;
-                }
-                isPrime[j] = false;
-            }
-        }
-
-        for (int i = 3; i < n / 2; i = i + 2) {
+        for (int i = 3; i < n / 2; i += 2) {
             a = i;
             b = n - a;
 
