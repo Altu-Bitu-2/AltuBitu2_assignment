@@ -4,55 +4,63 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
 
 using namespace std;
+typedef pair<int, int> yeongsu; //영수가 답한 스트라이크, 볼 개수
 
-vector<bool> isPossible;
-int result = 0;
+struct baseball {
+    string num; //민혁이가 말한 3자리 수 (1~9로 구성된, 서로 다른 숫자로 구성된)
+    int strike, ball;
+};
 
-//숫자야구에 등장할 수 있는 수인가?
-void findPossible() {
-    //false로 초기화
-    for (int i = 0; i < 1000; i++) {
-        isPossible.push_back(false);
-    }
-
-    string tmp;
-    for (int i = 123; i < 999; i++) {
-        tmp = to_string(i);
-        if (tmp[0] != tmp[1] && tmp[0] != tmp[2] && tmp[1] != tmp[2]) {
-            isPossible[i] = true;
-        }
-    }
-}
-
-//숫자 찾기
-void findNum(int n, int s, int b) {
+yeongsu cntStrikeBall(string &s1, string &s2) {
+    //민혁이가 말한 수와 정답 사이의 strike 개수, ball 개수 비교
     int strikeCnt = 0;
     int ballCnt = 0;
 
-    for (int i = 123; i < 999; i++) {
-        if (isPossible[i]) {
-            string minhyuk = to_string(n);
-            string quiz = to_string(i);
-
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    if (minhyuk[j] == quiz[k] && j == k) {
-                        //strike
-                        strikeCnt++;
-                    } else if (minhyuk[j] == quiz[k] && j != k) {
-                        //ball
-                        ballCnt++;
-                    }
-                }
-            }
-            if (strikeCnt != s || ballCnt != b) {
-                isPossible[i] = false;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (s1[i] == s2[j] && i == j) {
+                //스트라이크일 경우
+                strikeCnt++;
+            } else if (s1[i] == s2[j] && i != j) {
+                ballCnt++;
             }
         }
     }
+    return yeongsu(strikeCnt, ballCnt);
+}
+
+int game(int n, vector<baseball> &minhyuk) {
+    int possible = 0; //정답으로 가능한 개수
+
+    for (int i = 123; i <= 987; i++) {
+        bool check = true;
+        string s1 = to_string(i); //123~987까지의 수를 string으로 전환
+
+        if (s1[0] == '0' || s1[1] == '0' || s1[2] == '0') {
+            //0이 하나라도 존재한다면 (존재해서는 안 됨)
+            continue;
+        }
+        if (s1[0] == s1[1] || s1[0] == s1[2] || s1[1] == s1[2]) {
+            //서로 다른 숫자로 구성되어 있지 않다면
+            continue;
+        }
+
+        for (int j = 0; j < n; j++) {
+            string s2 = minhyuk[j].num; //민혁이가 질문한 수
+            yeongsu cnt = cntStrikeBall(s1, s2);  //s1과 s2의 strike와 ball 개수
+            if (cnt.first != minhyuk[j].strike || cnt.second != minhyuk[j].ball) {
+                //민혁이의 strike/ball 개수와 정답 기준 strike/ball 개수가 다르다면
+                check = false;
+                break;
+            }
+        }
+        if (check) {
+            possible++;
+        }
+    }
+    return possible;
 }
 
 int main() {
@@ -63,25 +71,11 @@ int main() {
     int q; //질문 개수
     cin >> q;
 
-    findPossible();
-
-    int num, strike, ball;
-
-    while (q--) {
-        cin >> num >> strike >> ball;
-        findNum(num, strike, ball);
+    vector<baseball> minhyuk(q);
+    for (int i = 0; i < q; i++) {
+        cin >> minhyuk[i].num >> minhyuk[i].strike >> minhyuk[i].ball;
     }
-
-    for (int i = 123; i < 999; i++) {
-        if (isPossible[i]) {
-            result++;
-        }
-    }
-
-    cout << result << "\n";
+    cout << game(q, minhyuk);
 
     return 0;
 }
-
-//이것도.... 힌트 주실 수 있을까요?ㅠㅠ
-//정말 죄송합니다ㅠㅠㅠ

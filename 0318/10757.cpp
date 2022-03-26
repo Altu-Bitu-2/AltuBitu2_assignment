@@ -12,7 +12,7 @@ using namespace std;
 vector<int> A_num;
 vector<int> B_num;
 
-void pushNum(vector<int> arr, string str) {
+void pushNum(vector<int> &arr, string str) {
     for (int i = 0; i < str.length(); i++) {
         arr.push_back(str[i] - '0');
     }
@@ -31,9 +31,7 @@ int main() {
 
     if (A.length() < B.length()) {
         //더 긴 숫자를 A로 정하기
-        string tmp = A;
-        A = B;
-        B = tmp;
+        swap(A, B);
     }
 
     //A와 B를 int 배열에 저장
@@ -47,7 +45,7 @@ int main() {
     int sum;
     for (int i = 0; i < B.length(); i++) {
         sum = A_num[i] + B_num[i] + carry;
-        result[i] = sum % 10;
+        result.push_back(sum % 10);
         carry = 0; //carry 초기화
         if (sum >= 10) {
             //합이 10보다 클 경우(받아올림 필요)
@@ -57,13 +55,18 @@ int main() {
 
     for (int i = B.length(); i < A.length(); i++) {
         //A가 아직 남아있을 경우
-        result[i] = A_num[i] + carry;
-        if (carry == 1) {
-            //carry 초기화
-            carry = 0;
+        sum = A_num[i] + carry;
+        result.push_back(sum % 10);
+        carry = 0; //carry 초기화
+        if (sum >= 10) {
+            //합이 10보다 클 경우(받아올림 필요)
+            carry = 1;
         }
     }
 
+    if(carry == 1) {
+        result.push_back(carry);
+    }
     //다시 뒤집기
     reverse(result.begin(), result.end());
 
@@ -74,6 +77,3 @@ int main() {
 
     return 0;
 }
-
-//잘못된 부분을 모르겠습니다..
-//힌트 주실 수 있을까요?ㅠㅠ
