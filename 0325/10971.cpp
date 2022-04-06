@@ -12,11 +12,14 @@ bool visited[10]; //방문 여부 판단
 int city; //도시 총 개수
 int cnt = 0; //방문한 도시 수
 
-void findRoute(int current, int cost) {
+void findRoute(int cnt, int current, int cost) {
     //current: 현재 위치
     if (cnt == city && current == 0) {
         //모든 도시를 다 돌아 다시 원위치로 돌아왔다면
         minCost = min(minCost, cost);
+        if(cost >= minCost) {
+            return;
+        }
         return;
     }
 
@@ -29,13 +32,11 @@ void findRoute(int current, int cost) {
             //현재 위치에서 i 도시로 가는 방법이 있고
             //i 도시를 방문한 적이 없다면
             visited[i] = true;
-            cnt++;
             //i 도시에서 다시 findRoute
-            findRoute(i, cost + travel[current][i]);
+            findRoute(cnt +1, i, cost + travel[current][i]);
 
             //방문 여부 및 도시 개수 초기화
             visited[i] = false;
-            cnt--;
         }
     }
     return;
@@ -53,7 +54,7 @@ int main() {
             cin >> travel[r][c];
         }
     }
-    findRoute(0, 0); //0 도시에서 0원 비용으로 순회 시작
+    findRoute(0, 0, 0); //0 도시에서 0원 비용으로 순회 시작
     cout << minCost;
 
     return 0;

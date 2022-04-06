@@ -6,46 +6,40 @@
 
 using namespace std;
 
-int sudoku[9][9];
-bool Row[9][9]; //row 체크 [row 번호][숫자]
-bool Col[9][9]; //column 체크 [column 번호][숫자]
-bool Square[9][9]; //square 체크 [정사각형의 상대적 위치][숫자]
+const int MAX = 9;
 
-void findAnswer(int fill) {
-    int r = fill / 9; //row 위치
-    int c = fill % 9; //column 위치
+int sudoku[MAX][MAX];
+bool Row[MAX][MAX + 1]; //row 체크 [row 번호][숫자]
+bool Col[MAX][MAX + 1]; //column 체크 [column 번호][숫자]
+bool Square[MAX][MAX + 1]; //square 체크 [정사각형의 상대적 위치][숫자]
 
-    if (fill == 81) {
-        //출력하기
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                cout << sudoku[i][j] << " ";
-            }
-            cout << "\n";
-        }
-        //exit(0);
+bool findAnswer(int fill) {
+    if (fill == 81) { //81 = 9 * 9
+        return true;
     }
 
-    if (sudoku[r][c] == 0) {
-        for (int i = 0; i < 9; i++) {
-            if (Row[r][i + 1] == false && Col[c][i + 1] == false && Square[(r / 3) * 3 + (c / 3)][i + 1] == false) {
-                Row[r][i + 1] = true;
-                Col[c][i + 1] = true;
-                Square[(r / 3) * 3 + (c / 3)][i + 1] = true;
-                sudoku[r][c] = i + 1;
+    int r = fill / MAX; //row 위치
+    int c = fill % MAX; //column 위치
 
-                findAnswer(fill + 1);
-
-                //리셋
-                Row[r][i + 1] = false;
-                Col[c][i + 1] = false;
-                Square[(r / 3) * 3 + (c / 3)][i + 1] = false;
-                sudoku[r][c] = 0;
-            }
-        }
-    } else {
-        findAnswer(fill + 1);
+    if (sudoku[r][c]) {
+        return findAnswer(fill + 1);
     }
+
+    for (int i = 1; i <= MAX; i++) {
+        if (!Row[r][i] && !Col[c][i] && !Square[(r / 3) * 3 + (c / 3)][i]) {
+            Row[r][i] = Col[c][i] = Square[(r / 3) * 3 + (c / 3)][i] = true;
+            sudoku[r][c] = i;
+
+            if(findAnswer(fill+1)) {
+                return true;
+            }
+
+            //리셋
+            Row[r][i] = Col[c][i] = Square[(r / 3) * 3 + (c / 3)][i] = false;
+            sudoku[r][c] = 0;
+        }
+    }
+    return false;
 }
 
 int main() {
@@ -54,8 +48,8 @@ int main() {
     cout.tie(NULL);
 
     //입력 받기
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
             cin >> sudoku[i][j];
             if (sudoku[i][j] != 0) {
                 //이미 채워진 숫자라면
@@ -69,5 +63,11 @@ int main() {
     //문제 풀기
     findAnswer(0);
 
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
+            cout << sudoku[i][j] << " ";
+        }
+        cout << "\n";
+    }
     return 0;
 }

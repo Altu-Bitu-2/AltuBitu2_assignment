@@ -7,9 +7,11 @@
 
 using namespace std;
 
+const int SIZE = 11;
+
 int N; //수의 개수
-vector<int> numList; //숫자들
-vector<int> calcList; //연산자 개수
+vector<int> numList(SIZE + 1, 0); //숫자들
+vector<int> calcList(4, 0); //연산자 개수
 int MIN = 1e9 + 1;
 int MAX = -1e9 - 1;
 
@@ -52,17 +54,14 @@ int main() {
     cout.tie(NULL);
 
     cin >> N;
+
     for (int i = 0; i < N; i++) {
         //숫자들 입력받기
-        int x;
-        cin >> x;
-        numList.push_back(x);
+        cin >> numList[i];
     }
     for (int i = 0; i < 4; i++) {
         //연산자 개수 입력받기
-        int y;
-        cin >> y;
-        calcList.push_back(y);
+        cin >> calcList[i];
     }
 
     //처음 등장하는 두 수를 이용해 연산 시작
