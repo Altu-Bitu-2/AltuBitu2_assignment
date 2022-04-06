@@ -24,20 +24,10 @@ int main() {
         cin >> operation;
 
         if (operation == "all") {
-            for (int i = 1; i < setResult.size(); i++) {
-                if (setResult[i] == 0) {
-                    //없으면 추가
-                    setResult[i] = 1;
-                }
-            }
+            setResult.assign(setResult.size(), 1);
             continue;
         } else if (operation == "empty") {
-            for (int i = 1; i < setResult.size(); i++) {
-                if (setResult[i] == 1) {
-                    //있으면 삭제
-                    setResult[i] = 0;
-                }
-            }
+            setResult.assign(setResult.size(), 0);
             continue;
         }
         cin >> x;
