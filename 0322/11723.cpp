@@ -23,44 +23,44 @@ int main() {
     for (int i = 0; i < M; i++) {
         cin >> operation;
 
-        if (operation == "add") {
-            cin >> x;
-            if (setResult[x] == 0) {
-                //집합에 없을 경우 추가
-                setResult[x] = 1;
-            }
-        } else if (operation == "remove") {
-            cin >> x;
-            if (setResult[x] == 1) {
-                //집합에 있을 경우 삭제
-                setResult[x] = 0;
-            }
-        } else if (operation == "check") {
-            cin >> x;
-            //결과 출력
-            cout << setResult[x] << "\n";
-        } else if (operation == "toggle") {
-            cin >> x;
-            if (setResult[x] == 0) {
-                //없으면 추가
-                setResult[x] = 1;
-            } else if (setResult[x] == 1) {
-                //있으면 삭제
-                setResult[x] = 0;
-            }
-        } else if (operation == "all") {
+        if (operation == "all") {
             for (int i = 1; i < setResult.size(); i++) {
                 if (setResult[i] == 0) {
                     //없으면 추가
                     setResult[i] = 1;
                 }
             }
+            continue;
         } else if (operation == "empty") {
             for (int i = 1; i < setResult.size(); i++) {
                 if (setResult[i] == 1) {
                     //있으면 삭제
                     setResult[i] = 0;
                 }
+            }
+            continue;
+        }
+        cin >> x;
+        if (operation == "add") {
+            if (setResult[x] == 0) {
+                //집합에 없을 경우 추가
+                setResult[x] = 1;
+            }
+        } else if (operation == "remove") {
+            if (setResult[x] == 1) {
+                //집합에 있을 경우 삭제
+                setResult[x] = 0;
+            }
+        } else if (operation == "check") {
+            //결과 출력
+            cout << setResult[x] << "\n";
+        } else if (operation == "toggle") {
+            if (setResult[x] == 0) {
+                //없으면 추가
+                setResult[x] = 1;
+            } else if (setResult[x] == 1) {
+                //있으면 삭제
+                setResult[x] = 0;
             }
         }
     }

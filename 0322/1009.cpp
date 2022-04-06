@@ -10,16 +10,20 @@ using namespace std;
 vector<int> findNum(int aa) {
     vector<int> numA; //패턴을 저장할 배열 선언
 
-    int first = aa; //첫 데이터가 처리되는 컴퓨터 번호
-    numA.push_back(first);
+    int first = aa % 10; //첫 데이터가 처리되는 컴퓨터 번호
 
-    int temp = first;
-    while (first != (temp * first) % 10) {
-        temp = (temp * first) % 10;
-        numA.push_back(temp);
+    if(first == 0) {
+        numA.push_back(10);
+        return numA;
+    } else {
+        numA.push_back(first);
+        int temp = first;
+        while (first != (temp * first) % 10) {
+            temp = (temp * first) % 10;
+            numA.push_back(temp);
+        }
+        return numA;
     }
-
-    return numA;
 }
 
 int main() {
