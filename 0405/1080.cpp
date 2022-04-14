@@ -10,11 +10,7 @@ using namespace std;
 void changeMatrix(int row, int col, vector<string> &mat_a) {
     for (int i = row; i < row + 3; i++) {
         for (int j = col; j < col + 3; j++) {
-            if (mat_a[i][j] == '1') {
-                mat_a[i][j] = '0';
-            } else {
-                mat_a[i][j] = '1';
-            }
+            mat_a[i][j] = (mat_a[i][j] - '0') ? '0' : '1';
         }
     }
 }
